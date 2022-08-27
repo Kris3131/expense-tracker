@@ -12,5 +12,24 @@ routes.post('', (req, res) => {
 		.then(() => res.redirect('/'))
 		.catch((err) => console.log(err))
 })
+routes.get('/:id/edit', (req, res) => {
+	const _id = req.params.id
+	Record.findById(_id)
+		.lean()
+		.then((record) => {
+			res.render('edit', { record })
+		})
+		.catch((err) => console.log(err))
+})
+routes.put('/:id', (req, res) => {
+	const _id = req.params.id
+	const { name, date, category, amount } = req.body
+	Record.findByIdAndUpdate(_id, { name, date, category, amount })
+		.lean()
+		.then(() => {
+			res.redirect('/')
+		})
+		.catch((err) => console.log(err))
+})
 
 module.exports = routes

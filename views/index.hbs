@@ -1,1 +1,12 @@
 <a href='/records/new'>新增支出</a>
+
+<ul>
+	{{#each record}}
+		<li>
+			{{this.name}}
+			{{this.date}}
+			{{this.amount}}
+			<a href='/records/{{this._id}}/edit'>編輯</a>
+		</li>
+	{{/each}}
+</ul>

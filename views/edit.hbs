@@ -1,0 +1,37 @@
+<div>
+	<span>*必填欄位</span>
+	<p>請修改你的支出</p>
+</div>
+
+<form action='/records/{{record._id}}?_method=PUT' method='POST'>
+	<div>
+		<label for='name'>名稱*：</label>
+		<input type='text' id='name' name='name' value='{{record.name}}' />
+	</div>
+	<div>
+		<label for='date'>日期*：</label>
+		<input type='date' id='date' name='date' value='{{record.date}}' />
+	</div>
+	<div>
+		<label for='category'>類別*：</label>
+		<input
+			type='text'
+			list='category-list'
+			id='category'
+			name='category'
+			value='{{record.category}}'
+		/>
+		<datalist id='category-list'>
+			<option>家居物業</option>
+			<option>交通出行</option>
+			<option>休閒娛樂</option>
+			<option>餐飲食品</option>
+			<option>其他</option>
+		</datalist>
+	</div>
+	<div>
+		<label for='amount'>金額*：</label>
+		<input type='number' id='amount' name='amount' value='{{record.amount}}' />
+	</div>
+	<div><button type='submit'>送出</button></div>
+</form>
