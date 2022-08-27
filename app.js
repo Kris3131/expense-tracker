@@ -1,6 +1,8 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const routes = require('./routes/index')
+
 require('dotenv').config()
 
 const app = express()
@@ -14,9 +16,7 @@ db.once('open', () => console.log(`Mongoose connected to MONGODB Success`))
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-app.get('/', (req, res) => {
-	res.render('index')
-})
+app.use(routes)
 
 app.listen(port, () => {
 	console.log(`localhost-> http://localhost:${port}`)
