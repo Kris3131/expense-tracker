@@ -12,11 +12,22 @@
 		/>
 	</head>
 	<body>
-		{{#if isAuthenticated}}
-			<a href='/users/logout'>logout</a>
-		{{else}}
-			<a href='/users/login'>login</a>
-		{{/if}}
+		<nav class='navbar bg-light'>
+			<div class='container-fluid'>
+				<span class='navbar-brand mb-0 h1'>家庭記帳本</span>
+				{{#if isAuthenticated}}
+					<a
+						class='btn btn-outline-light border border-dark text-warning'
+						href='/users/logout'
+					>登出</a>
+				{{else}}
+					<a
+						class='btn btn-outline-light border border-dark text-warning'
+						href='/users/login'
+					>登入</a>
+				{{/if}}
+			</div>
+		</nav>
 		{{{body}}}
 		<script
 			src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'
