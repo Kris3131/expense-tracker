@@ -32,5 +32,13 @@ routes.post(
 		failureRedirect: '/users/login',
 	})
 )
+routes.get('/logout', (req, res) => {
+	req.logout((err) => {
+		if (err) {
+			return next(err)
+		}
+	})
+	res.redirect('/users/login')
+})
 
 module.exports = routes
