@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
@@ -17,6 +18,15 @@ db.once('open', () => console.log(`Mongoose connected to MONGODB Success`))
 
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
+
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: true,
+	})
+)
+
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(routes)
