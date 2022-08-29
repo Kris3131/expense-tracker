@@ -24,10 +24,11 @@ module.exports = (app) => {
 			}
 		)
 	)
-
+	// user -> session
 	passport.serializeUser((user, done) => {
 		done(null, user.id)
 	})
+	// session -> user
 	passport.deserializeUser((id, done) => {
 		User.findById(id)
 			.lean()
