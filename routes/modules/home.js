@@ -3,7 +3,8 @@ const routes = express.Router()
 const Record = require('../../models/Record')
 
 routes.get('/', (req, res) => {
-	Record.find()
+	const userId = req.user._id
+	Record.find({ userId })
 		.lean()
 		.then((record) => {
 			res.render('index', { record })

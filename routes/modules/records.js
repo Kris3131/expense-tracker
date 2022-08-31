@@ -8,6 +8,7 @@ routes.get('/new', (req, res) => {
 	res.render('new')
 })
 routes.post('', (req, res) => {
+	const userId = req.user._id
 	const { name, date, category, amount } = req.body // 找出post form req 的項目
 	Category.findOne({ name: category }) // 找出 category 中有沒有出現在 Category Model 中
 		.lean()
@@ -22,6 +23,7 @@ routes.post('', (req, res) => {
 							category,
 							amount,
 							categoryId: category._id,
+							userId,
 						}) // 建立新的 Record Model 項目
 							.then(() => res.redirect('/'))
 							.catch((err) => console.log(err))
@@ -31,7 +33,7 @@ routes.post('', (req, res) => {
 			if (category) {
 				// 有的話不需要建立一個新的Category Model 項目
 				const categoryId = category._id // 直接 Record 的 categoryId 指向到 已經建立的 category 的 id
-				Record.create({ name, date, category, amount, categoryId })
+				Record.create({ name, date, category, amount, categoryId, userId })
 					.then(() => res.redirect('/'))
 					.catch((err) => console.log(err))
 			}
@@ -40,8 +42,9 @@ routes.post('', (req, res) => {
 })
 
 routes.get('/:id/edit', (req, res) => {
+	const userId = req.user._id
 	const _id = req.params.id
-	Record.findById(_id)
+	Record.findOne({ _id, userId })
 		.lean()
 		.then((record) => {
 			res.render('edit', { record })
@@ -49,6 +52,7 @@ routes.get('/:id/edit', (req, res) => {
 		.catch((err) => console.log(err))
 })
 routes.put('/:id', (req, res) => {
+	const userId = req.user._id
 	const _id = req.params.id
 	const { name, date, category, amount } = req.body
 	Category.findOne({ name: category })
@@ -57,7 +61,13 @@ routes.put('/:id', (req, res) => {
 			if (!category) {
 				Category.create({ name: req.body.category }).then((category) => {
 					const categoryId = category._id
-					Record.findByIdAndUpdate(_id, { name, date, categoryId, amount })
+					Record.findByIdAndUpdate(_id, {
+						name,
+						date,
+						categoryId,
+						amount,
+						userId,
+					})
 						.lean()
 						.then(() => {
 							res.redirect('/')
@@ -67,7 +77,13 @@ routes.put('/:id', (req, res) => {
 			}
 			if (category) {
 				const categoryId = category._id
-				Record.findByIdAndUpdate(_id, { name, date, categoryId, amount })
+				Record.findByIdAndUpdate(_id, {
+					name,
+					date,
+					categoryId,
+					amount,
+					userId,
+				})
 					.lean()
 					.then(() => {
 						res.redirect('/')
@@ -79,8 +95,9 @@ routes.put('/:id', (req, res) => {
 })
 
 routes.delete('/:id', (req, res) => {
+	const userId = req.user._id
 	const _id = req.params.id
-	Record.findByIdAndRemove(_id)
+	Record.findOneAndRemove({ _id, userId })
 		.then(() => res.redirect('/'))
 		.catch((err) => console.log(err))
 })
