@@ -1,31 +1,53 @@
-<div>
-	<span>*必填欄位</span>
-	<p>請輸入你的支出</p>
-</div>
+<div class='container mx-auto d-flex flex-column align-items-center mt-3'>
 
-<form action='/records' method='POST'>
-	<div>
-		<label for='name'>名稱*：</label>
-		<input type='text' id='name' name='name' />
+	<div class='row g-3 align-items-center mt-2'>
+		<p class='col-auto'>*必填欄位</p>
+		<p class='col-auto'>請輸入你的支出</p>
 	</div>
-	<div>
-		<label for='date'>日期*：</label>
-		<input type='date' id='date' name='date' />
-	</div>
-	<div>
-		<label for='category'>類別*：</label>
-		<input type='text' list='category-list' id='category' name='category' />
-		<datalist id='category-list'>
-			<option>家居物業</option>
-			<option>交通出行</option>
-			<option>休閒娛樂</option>
-			<option>餐飲食品</option>
-			<option>其他</option>
-		</datalist>
-	</div>
-	<div>
-		<label for='amount'>金額*：</label>
-		<input type='number' id='amount' name='amount' />
-	</div>
-	<div><button type='submit'>新增支出</button></div>
-</form>
+
+	<form action='/records' method='POST'>
+		<div class='row g-3 align-items-center mt-2'>
+			<label for='name' class='col-auto'>名稱*：</label>
+			<div class='col-auto'>
+				<input type='text' id='name' name='name' class='form-control' />
+			</div>
+		</div>
+		<div class='row g-3 align-items-center mt-2'>
+			<label for='date' class='col-auto'>日期*：</label>
+			<div class='col-auto'>
+				<input type='date' id='date' name='date' class='form-control' />
+			</div>
+		</div>
+		<div class='row g-3 align-items-center mt-2'>
+			<label for='category' class='col-auto'>類別*：</label>
+			<div class='col-auto'>
+				<input
+					type='text'
+					list='category-list'
+					id='category'
+					name='category'
+					class='form-control'
+				/>
+				<datalist id='category-list'>
+					<option>家居物業</option>
+					<option>交通出行</option>
+					<option>休閒娛樂</option>
+					<option>餐飲食品</option>
+					<option>其他</option>
+				</datalist>
+			</div>
+		</div>
+		<div class='row g-3 align-items-center mt-2'>
+			<label for='amount' class='col-auto'>金額*：</label>
+			<div class='col-auto'>
+				<input type='number' id='amount' name='amount' class='form-control' />
+			</div>
+		</div>
+		<div class='row g-3 align-items-center mt-2'>
+			<button
+				type='submit'
+				class='mx-auto btn border-dark'
+			>新增支出</button></div>
+	</form>
+
+</div>

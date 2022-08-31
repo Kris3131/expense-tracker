@@ -1,19 +1,27 @@
-<a href='/records/new'>新增支出</a>
+<div class='container d-flex flex-column justify-content-center'>
+	<ul class='row g-3 align-items-center mt-2'>
+		{{#each record}}
+			<li class='d-flex justify-content-evenly'>
+				<div class='d-flex justify-content-around'>
+					<div><img src='' alt='' />X</div>
+					<p>{{this.name}}</p>
+					<p>{{this.date}}</p>
+					<p>{{this.amount}}</p>
+				</div>
+				<div>
+					<a href='/records/{{this._id}}/edit'>編輯</a>
+					<form
+						action='/records/{{this._id}}?_method=DELETE'
+						method='post'
+						style='display: inline;'
+					>
+						<button type='submit'>刪除</button>
+					</form>
+				</div>
+			</li>
+		{{/each}}
+	</ul>
 
-<ul>
-	{{#each record}}
-		<li>
-			{{this.name}}
-			{{this.date}}
-			{{this.amount}}
-			<a href='/records/{{this._id}}/edit'>編輯</a>
-			<form
-				action='/records/{{this._id}}?_method=DELETE'
-				method='post'
-				style='display: inline;'
-			>
-				<button type='submit'>刪除</button>
-			</form>
-		</li>
-	{{/each}}
-</ul>
+	<a href='/records/new' class='mx-auto btn border-dark'>新增支出</a>
+
+</div>
