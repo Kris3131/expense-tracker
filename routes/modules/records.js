@@ -98,7 +98,11 @@ routes.delete('/:id', (req, res) => {
 	const userId = req.user._id
 	const _id = req.params.id
 	Record.findOneAndRemove({ _id, userId })
-		.then(() => res.redirect('/'))
+
+		.then(() => {
+			req.flash('success_msg', '你已經成功登出。')
+			res.redirect('/')
+		})
 		.catch((err) => console.log(err))
 })
 

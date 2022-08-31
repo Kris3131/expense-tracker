@@ -13,10 +13,12 @@ module.exports = (app) => {
 				User.findOne({ email }) // 從資料庫找有沒有人
 					.then((user) => {
 						if (!user)
-							return done(null, false, { message: `Email is not register` }) // 假如沒有資料->結束程序,不用帶錯誤訊息/沒有用戶資料/顯示訊息
+							return done(null, false, {
+								message: req.flash('warning_msg', `Email 沒有註冊過`),
+							}) // 假如沒有資料->結束程序,不用帶錯誤訊息/沒有用戶資料/顯示訊息
 						if (user.password !== password)
 							return done(null, false, {
-								message: `Email or Password incorrect`,
+								message: req.flash('warning_msg', `Email 或 Password 不正確`),
 							}) // 假如密碼不同->結束程序,不用帶錯誤訊息/沒有用戶資料/顯示訊息
 						return done(null, user) // 建立使用者
 					})

@@ -8,10 +8,27 @@ routes.get('/register', (req, res) => {
 })
 
 routes.post('/register', (req, res) => {
-	const { name, email, password } = req.body
+	const { name, email, password, confirmPassword } = req.body
+	const errors = []
+	if (!name || !email || !password || !confirmPassword) {
+		errors.push({ message: '所有欄位都是必填' })
+	}
+	if (password !== confirmPassword) {
+		errors.push({ message: '密碼與確認密碼不同' })
+	}
+	if (errors.length) {
+		res.render('register', {
+			errors,
+			name,
+			email,
+			password,
+			confirmPassword,
+		})
+	}
 	User.findOne({ email })
 		.then((user) => {
 			if (user) {
+				errors.push({ message: '這個 Email 已經註冊過了' })
 				res.render('login', { email: user.email })
 			} else {
 				User.create({ name, email, password })
@@ -30,6 +47,7 @@ routes.post(
 	passport.authenticate('local', {
 		successRedirect: '/',
 		failureRedirect: '/users/login',
+		failureMessage: true,
 	})
 )
 routes.get('/logout', (req, res) => {
