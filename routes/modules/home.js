@@ -7,15 +7,15 @@ routes.get('/', (req, res) => {
 	const sortList = ['amount', '-amount', 'category', 'time']
 	const sortOption = sortList.includes(req.query.sort) ? req.query.sort : 'time'
 	const userId = req.user._id
-	let totalAmount = 0
 	let icon = ''
-
+	let totalAmount = 0
 	Record.find({ userId })
 		.lean()
 		.sort(sortOption)
 		.then((record) => {
 			record.forEach((item) => {
 				totalAmount = totalAmount + item.amount
+				item.date = item.date.toLocaleString('zh-tw')
 				Category.findById(item.categoryId)
 					.then((category) => {
 						return (icon = category.icon)
