@@ -31,10 +31,8 @@ routes.post('/register', (req, res) => {
 	User.findOne({ email })
 		.then((user) => {
 			if (user) {
-				return res.render('login', {
-					email: user.email,
-					message: '這個 Email 已經註冊過了',
-				})
+				errors.push({ message: '這個 Email 已經註冊過了' })
+				return res.render('login', { email: user.email })
 			}
 			return bcrypt
 				.genSalt(10)

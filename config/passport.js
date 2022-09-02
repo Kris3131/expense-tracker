@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 const User = require('../models/User')
 
 module.exports = (app) => {
@@ -13,10 +14,11 @@ module.exports = (app) => {
 			(req, email, password, done) => {
 				User.findOne({ email }) // 從資料庫找有沒有人
 					.then((user) => {
-						if (!user)
+						if (!user) {
 							return done(null, false, {
 								message: req.flash('warning_msg', `Email 沒有註冊過`),
 							}) // 假如沒有資料->結束程序,不用帶錯誤訊息/沒有用戶資料/顯示訊息
+						}
 						return bcrypt.compare(password, user.password).then((isMatch) => {
 							if (!isMatch) {
 								return done(null, false, {
@@ -30,13 +32,49 @@ module.exports = (app) => {
 			}
 		)
 	)
+
+	passport.use(
+		new FacebookStrategy(
+			{
+				clientID: process.env.FB_CLIENTID,
+				clientSecret: process.env.FB_CLIENT_SECRET,
+				callbackURL: 'http://localhost:3000/auth/facebook/callback',
+				profileFields: ['email', 'displayName'],
+			},
+			(accessToken, refreshToken, profile, done) => {
+				console.log(profile)
+				const { name, email } = profile._json
+				console.log(name, email)
+				User.findOne({ email })
+					.then((user) => {
+						if (user) {
+							return done(null, user)
+						}
+						const randomPassword = Math.random().toString(36).slice(-8)
+						bcrypt
+							.genSalt(10)
+							.then((salt) => bcrypt.hash(randomPassword, salt))
+							.then((hash) =>
+								User.create({
+									name,
+									email,
+									password: hash,
+								})
+							)
+							.then((user) => done(null, user))
+							.catch((err) => done(err, false))
+					})
+					.catch((err) => done(err, false))
+			}
+		)
+	)
 	// user -> session
 	passport.serializeUser((user, done) => {
-		done(null, user.id)
+		return done(null, user.id)
 	})
 	// session -> user
 	passport.deserializeUser((id, done) => {
-		User.findById(id)
+		return User.findById(id)
 			.lean()
 			.then((user) => done(null, user))
 			.catch((err) => done(err, null))
