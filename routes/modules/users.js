@@ -9,7 +9,7 @@ routes.get('/register', (req, res) => {
 	res.render('register')
 })
 
-routes.post('/register', (req, res) => {
+routes.post('/register', (req, res, next) => {
 	const { name, email, password, confirmPassword } = req.body
 	const errors = []
 	if (!name || !email || !password || !confirmPassword) {
@@ -39,9 +39,9 @@ routes.post('/register', (req, res) => {
 				.then((salt) => bcrypt.hash(password, salt))
 				.then((hash) => User.create({ name, email, password: hash }))
 				.then(() => res.redirect('/'))
-				.catch((err) => console.log(err))
+				.catch((err) => next(err))
 		})
-		.catch((err) => console.log(err))
+		.catch((err) => next(err))
 })
 
 routes.get('/login', (req, res) => {
@@ -55,7 +55,7 @@ routes.post(
 		failureMessage: true,
 	})
 )
-routes.get('/logout', (req, res) => {
+routes.get('/logout', (req, res, next) => {
 	req.logout((err) => {
 		if (err) {
 			return next(err)

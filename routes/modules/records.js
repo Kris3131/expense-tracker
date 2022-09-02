@@ -7,7 +7,7 @@ const routes = express.Router()
 routes.get('/new', (req, res) => {
 	res.render('new')
 })
-routes.post('', (req, res) => {
+routes.post('', (req, res, next) => {
 	const userId = req.user._id
 	const { name, date, category, amount } = req.body // 找出post form req 的項目
 	let icon = ''
@@ -40,23 +40,23 @@ routes.post('', (req, res) => {
 							userId,
 						}) // 建立新的 Record Model 項目
 							.then(() => res.redirect('/'))
-							.catch((err) => console.log(err))
+							.catch((err) => next(err))
 					})
-					.catch((err) => console.log(err))
+					.catch((err) => next(err))
 			}
 			if (category) {
 				// 有的話不需要建立一個新的Category Model 項目
 				const categoryId = category._id // 直接 Record 的 categoryId 指向到 已經建立的 category 的 id
 				Record.create({ name, date, category, amount, categoryId, userId })
 					.then(() => res.redirect('/'))
-					.catch((err) => console.log(err))
+					.catch((err) => next(err))
 			}
 		})
 
-		.catch((err) => console.log(err))
+		.catch((err) => next(err))
 })
 
-routes.get('/:id/edit', (req, res) => {
+routes.get('/:id/edit', (req, res, next) => {
 	const userId = req.user._id
 	const _id = req.params.id
 	Record.findOne({ _id, userId })
@@ -64,7 +64,7 @@ routes.get('/:id/edit', (req, res) => {
 		.then((record) => {
 			res.render('edit', { record })
 		})
-		.catch((err) => console.log(err))
+		.catch((err) => next(err))
 })
 routes.put('/:id', (req, res) => {
 	const userId = req.user._id
@@ -87,7 +87,7 @@ routes.put('/:id', (req, res) => {
 						.then(() => {
 							res.redirect('/')
 						})
-						.catch((err) => console.log(err))
+						.catch((err) => next(err))
 				})
 			}
 			if (category) {
@@ -103,13 +103,13 @@ routes.put('/:id', (req, res) => {
 					.then(() => {
 						res.redirect('/')
 					})
-					.catch((err) => console.log(err))
+					.catch((err) => next(err))
 			}
 		})
-		.catch((err) => console.log(err))
+		.catch((err) => next(err))
 })
 
-routes.delete('/:id', (req, res) => {
+routes.delete('/:id', (req, res, next) => {
 	const userId = req.user._id
 	const _id = req.params.id
 	Record.findOneAndRemove({ _id, userId })
@@ -118,7 +118,7 @@ routes.delete('/:id', (req, res) => {
 			req.flash('success_msg', '你已經成功登出。')
 			res.redirect('/')
 		})
-		.catch((err) => console.log(err))
+		.catch((err) => next(err))
 })
 
 module.exports = routes

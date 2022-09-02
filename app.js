@@ -29,7 +29,7 @@ app.use(
 		cookie: { maxAge: 60 * 1000 },
 	})
 )
-
+app.use(express.static('publics'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 usePassport(app)
@@ -39,6 +39,8 @@ app.use((req, res, next) => {
 	res.locals.user = req.user
 	res.locals.success_msg = req.flash('success_msg')
 	res.locals.warning_msg = req.flash('warning_msg')
+	res.locals.error_404_msg = req.flash('error_404_msg')
+	res.locals.error_500_msg = req.flash('error_500_msg')
 	next()
 })
 app.use(routes)

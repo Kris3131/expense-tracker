@@ -11,7 +11,7 @@
 {{/if}}
 
 {{#if warning_msg}}
-	<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+	<div class='alert alert-danger alert-dismissible fade show' role='alert'>
 		<strong>{{warning_msg}}</strong>
 		<button
 			type='button'
@@ -34,4 +34,16 @@
 			></button>
 		</div>
 	{{/each}}
+{{/if}}
+
+{{#if error_404_msg}}
+	<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+		<strong>{{error_404_msg}}</strong>
+	</div>
+{{/if}}
+
+{{#if error_500_msg}}
+	<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+		<strong>{{error_500_msg}}</strong>
+	</div>
 {{/if}}
