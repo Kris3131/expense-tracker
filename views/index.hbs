@@ -38,13 +38,19 @@
 	</div>
 
 	{{! record list }}
+	<div class='d-flex justify-content-center'><h2>總支出:
+			{{totalAmount}}元</h2></div>
 	<table class='table'>
 		{{#each record}}
 			<tbody>
 				<tr class='align-items-center'>
-					<td class='col-1 align-middle text-center fs-4 text-info'><i
-							class='{{this.categoryId.icon}}'
-						></i></td>
+					<td class='col-1 align-middle text-center fs-4 text-info'>
+						{{#if icon}}
+							<i class='{{icon}}'></i>
+						{{else}}
+							<i class='fa-solid fa-pen'></i>
+						{{/if}}
+					</td>
 					<td class='col-7 align-middle'>
 						<div
 							class='d-flex flex-row justify-content-between align-items-center'

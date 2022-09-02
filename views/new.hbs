@@ -15,7 +15,12 @@
 		<div class='row g-3 align-items-center mt-2'>
 			<label for='date' class='col-auto'>日期*：</label>
 			<div class='col-auto'>
-				<input type='date' id='date' name='date' class='form-control' />
+				<input
+					type='datetime-local'
+					id='date'
+					name='date'
+					class='form-control'
+				/>
 			</div>
 		</div>
 		<div class='row g-3 align-items-center mt-2'>
@@ -29,11 +34,11 @@
 					class='form-control'
 				/>
 				<datalist id='category-list'>
-					<option>家居物業</option>
-					<option>交通出行</option>
-					<option>休閒娛樂</option>
-					<option>餐飲食品</option>
-					<option>其他</option>
+					<option value='family'>家居物業</option>
+					<option value='transport'>交通出行</option>
+					<option value='entertainment'>休閒娛樂</option>
+					<option value='food'>餐飲食品</option>
+					<option value='other'>其他</option>
 				</datalist>
 			</div>
 		</div>

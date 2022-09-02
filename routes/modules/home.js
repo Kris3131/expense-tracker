@@ -1,16 +1,28 @@
 const express = require('express')
 const routes = express.Router()
 const Record = require('../../models/Record')
+const Category = require('../../models/Category')
 
 routes.get('/', (req, res) => {
 	const sortList = ['amount', '-amount', 'category', 'time']
 	const sortOption = sortList.includes(req.query.sort) ? req.query.sort : 'time'
 	const userId = req.user._id
+	let totalAmount = 0
+	let icon = ''
+
 	Record.find({ userId })
 		.lean()
 		.sort(sortOption)
 		.then((record) => {
-			res.render('index', { record })
+			record.forEach((item) => {
+				totalAmount = totalAmount + item.amount
+				Category.findById(item.categoryId)
+					.then((category) => {
+						return (icon = category.icon)
+					})
+					.catch((err) => console.log(err))
+			})
+			return res.render('index', { record, totalAmount, icon })
 		})
 		.catch((err) => console.log(err))
 })
