@@ -1,26 +1,79 @@
 <div class='container d-flex flex-column justify-content-center'>
-	<ul class='row g-3 align-items-center mt-2'>
+	{{! search and filter }}
+
+	<div class='d-flex justify-content-center align-items-center mt-3'>
+		<form action='/search'>
+			<h4 class='mb-2'><label for='searchRecord'>尋找支出：</label></h4>
+			<div class='input-group'>
+				<input
+					id='searchRecord'
+					type='text'
+					name='keyword'
+					class='form-control'
+					autocomplete='off'
+					placeholder='請輸入名稱'
+					value='{{keyword}}'
+				/>
+				<div class='input-group-append'>
+					<button
+						class='btn btn-major'
+						type='submit'
+						id='search-button'
+					>搜尋</button>
+				</div>
+			</div>
+		</form>
+		<form action='/'>
+			<h4 class='mb-2'><label for='sort'>排序</label></h4>
+			<div class='input-group'>
+				<select class='form-control' id='sort' name='sort'>
+					<option value='amount'>金額++</option>
+					<option value='-amount'>金額--</option>
+					<option value='category'>類別</option>
+					<option value='time'>時間</option>
+				</select>
+				<button type='submit' class='btn'>排序</button>
+			</div>
+		</form>
+	</div>
+
+	{{! record list }}
+	<table class='table'>
 		{{#each record}}
-			<li class='d-flex justify-content-evenly'>
-				<div class='d-flex justify-content-around'>
-					<div><img src='' alt='' />X</div>
-					<p>{{this.name}}</p>
-					<p>{{this.date}}</p>
-					<p>{{this.amount}}</p>
-				</div>
-				<div>
-					<a href='/records/{{this._id}}/edit'>編輯</a>
-					<form
-						action='/records/{{this._id}}?_method=DELETE'
-						method='post'
-						style='display: inline;'
-					>
-						<button type='submit'>刪除</button>
-					</form>
-				</div>
-			</li>
+			<tbody>
+				<tr class='align-items-center'>
+					<td class='col-1 align-middle text-center fs-4 text-info'><i
+							class='{{this.categoryId.icon}}'
+						></i></td>
+					<td class='col-7 align-middle'>
+						<div
+							class='d-flex flex-row justify-content-between align-items-center'
+						>
+							<div>
+								<div>{{this.name}}</div>
+								<small>{{this.date}}</small>
+							</div>
+							<div class='fs-5 me-2'>{{this.amount}}</div>
+						</div>
+					</td>
+					<td class='col-1 align-middle text-end'>
+						<a href='/records/{{this._id}}/edit'>
+							<button type='button' class='btn text-primary'>編輯</button>
+						</a>
+					</td>
+					<td class='col-1 align-middle'>
+						<form
+							action='/records/{{this._id}}?_method=DELETE'
+							method='post'
+							style='display: inline;'
+						>
+							<button type='submit' class='btn text-danger'>刪除</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
 		{{/each}}
-	</ul>
+	</table>
 
 	<a href='/records/new' class='mx-auto btn border-dark'>新增支出</a>
 
