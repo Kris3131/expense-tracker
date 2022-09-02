@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
@@ -20,7 +21,12 @@ app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
+		store: MongoStore.create({
+			mongoUrl: process.env.MONGODB_URI,
+			touchAfter: 24 * 3600,
+		}),
+		cookie: { maxAge: 60 * 1000 },
 	})
 )
 
