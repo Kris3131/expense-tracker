@@ -5,41 +5,43 @@ const User = require('../User')
 const Record = require('../Record')
 const bcrypt = require('bcryptjs')
 
-const userList = require('./userList.json')
-const recordList = require('./recordList.json')
+const SEED_USER = {
+	name: 'user1',
+	email: 'user1@example.com',
+	password: '12345678',
+}
 
-db.once('open', async () => {
-	// 先把 Category 資料載進來
-	const categorySeed = Category.find().lean()
-	// record 需要 userId / categoryId
-
-	await Promise.all(
-		// 建立 user -> userId
-		userList.map(async (user) => {
-			const { name, email, password } = user
-			const userSeed = await User.create({
-				name,
-				email,
-				password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+db.once('open', () => {
+	bcrypt
+		.genSalt(10)
+		.then((salt) => bcrypt.hash(SEED_USER.password, salt))
+		.then((hash) =>
+			User.create({
+				name: SEED_USER.name,
+				email: SEED_USER.email,
+				password: hash,
 			})
-			console.log('user create!')
-			await Promise.all(
-				// 建立 record
-				recordList.map(async (record) => {
-					// recordList -> 把物件丟出來
-					const { name, date, amount, category } = record
-
-					// 把 categoryId 抓出來 -> 建立 record
-					const categoryItem = categorySeed.find({ name: category })
-					await Record.create({
-						name,
-						date,
-						amount,
-						userId: userSeed._id,
-						categoryId: categoryItem._id,
-					})
+		)
+		.then((user) => {
+			const userId = user._id
+			return Category.find()
+				.lean()
+				.then((item) => {
+					return Promise.all(
+						Array.from({ length: item.length }, (_, i) => {
+							return Record.create({
+								name: '花費',
+								date: Date.now(),
+								amount: Number((i + 1) * 10),
+								userId,
+								categoryId: item[i]._id,
+							})
+						})
+					)
 				})
-			)
+				.then(() => {
+					console.log('record create')
+					process.exit()
+				})
 		})
-	)
 })
