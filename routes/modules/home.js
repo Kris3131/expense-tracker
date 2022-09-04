@@ -7,6 +7,7 @@ routes.get('/', (req, res, next) => {
 	const userId = req.user._id
 	const filterCategory = req.query.filterCategory
 	let totalAmount = 0
+	let icon = ''
 	if (!filterCategory) {
 		Record.find({ userId })
 			.populate('categoryId')
@@ -16,16 +17,10 @@ routes.get('/', (req, res, next) => {
 				record.forEach((item) => {
 					totalAmount = totalAmount + item.amount
 					item.date = item.date.toLocaleDateString()
-					Category.findById(item.categoryId)
-						.then((category) => {
-							return (icon = category.icon)
-						})
-						.catch((err) => next(err))
 				})
 				return res.render('index', {
 					record,
 					totalAmount,
-					// icon,
 					filterCategory,
 				})
 			})

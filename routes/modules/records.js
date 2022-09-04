@@ -10,20 +10,6 @@ routes.get('/new', (req, res) => {
 routes.post('', (req, res, next) => {
 	const userId = req.user._id
 	const { name, date, category, amount } = req.body // 找出post form req 的項目
-	let icon = ''
-
-	if (category === 'family') {
-		icon = 'fa-solid fa-house'
-	}
-	if (category === 'transport') {
-		icon = 'fa-solid fa-van-shuttle'
-	}
-	if (category === 'entertainment') {
-		icon = 'fa-solid fa-face-grin-beam'
-	}
-	if (category === 'food') {
-		icon = 'fa-solid fa-utensils'
-	}
 	Category.findOne({ name: category }) // 找出 category 中有沒有出現在 Category Model 中
 		.lean()
 		.then((category) => {
