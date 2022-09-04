@@ -29,7 +29,7 @@ routes.get('/', (req, res, next) => {
 		Category.findOne({ name: filterCategory }).then((category) => {
 			icon = category.icon
 			const categoryId = category._id
-			Record.find({ categoryId })
+			Record.find({ $and: [{ categoryId }, { userId }] })
 				.lean()
 				.then((record) => {
 					record.forEach((item) => {
