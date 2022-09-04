@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars')
 const hbshepler = require('handlebars-helpers')()
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+const PORT = process.env.PORT || 3000
 
 const routes = require('./routes/index')
 
@@ -49,6 +50,6 @@ app.use((req, res, next) => {
 })
 app.use(routes)
 
-app.listen(port, () => {
-	console.log(`localhost-> http://localhost:${port}`)
+app.listen(PORT, () => {
+	console.log(`localhost-> http://localhost:${PORT}`)
 })
