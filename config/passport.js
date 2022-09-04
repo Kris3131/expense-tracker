@@ -40,7 +40,7 @@ module.exports = (app) => {
 			{
 				clientID: process.env.FB_CLIENTID,
 				clientSecret: process.env.FB_CLIENT_SECRET,
-				callbackURL: 'http://localhost:3000/auth/facebook/callback',
+				callbackURL: process.env.FB_CALLBACK_URL,
 				profileFields: ['email', 'displayName'],
 			},
 			(accessToken, refreshToken, profile, done) => {
@@ -74,7 +74,7 @@ module.exports = (app) => {
 			{
 				clientID: process.env.GOOGLE_CLIENTID,
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-				callbackURL: 'http://localhost:3000/auth/google/callback',
+				callbackURL: process.env.GOOGLE_CALLBACK_URL,
 				profileFields: ['email', 'displayName'],
 			},
 			(accessToken, refreshToken, profile, done) => {
