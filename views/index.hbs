@@ -5,13 +5,13 @@
 			<h4 class='mb-2'><label for='filterCategory'>類別</label></h4>
 			<div class='input-group'>
 				<select class='form-control' id='filterCategory' name='filterCategory'>
-					<option value='family'>家居物業</option>
-					<option value='transport'>交通出行</option>
-					<option value='entertainment'>休閒娛樂</option>
-					<option value='food'>餐飲食品</option>
-					<option value='other'>其他</option>
+					<option value='family' {{#is filterCategory 'family'}}selected{{/is}}>家居物業</option>
+					<option value='transport' {{#is filterCategory 'transport'}}selected{{/is}}>交通出行</option>
+					<option value='entertainment' {{#is filterCategory 'entertainment'}}selected{{/is}}>休閒娛樂</option>
+					<option value='food' {{#is filterCategory 'food'}}selected{{/is}}>餐飲食品</option>
+					<option value='other' {{#is filterCategory 'other'}}selected{{/is}}>其他</option>
 				</select>
-				<button type='submit' class='btn'>排序</button>
+				<button type='submit' class='btn'>類別篩選</button>
 			</div>
 		</form>
 	</div>
@@ -24,7 +24,7 @@
 			<tbody>
 				<tr class='align-items-center'>
 					<td class='col-1 align-middle text-center fs-4'>
-						<i class=''></i>
+						<i class='{{icon}}'></i>
 					</td>
 					<td class='col-7 align-middle'>
 						<div

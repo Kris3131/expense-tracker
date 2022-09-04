@@ -3,6 +3,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
+const hbshepler = require('handlebars-helpers')()
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 
@@ -14,7 +15,10 @@ require('./config/mongoose')
 const app = express()
 const port = 3000
 
-app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine(
+	'hbs',
+	exphbs.engine({ defaultLayout: 'main', extname: '.hbs', helpers: hbshepler })
+)
 app.set('view engine', 'hbs')
 
 app.use(

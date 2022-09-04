@@ -22,11 +22,17 @@ routes.get('/', (req, res, next) => {
 						})
 						.catch((err) => next(err))
 				})
-				return res.render('index', { record, totalAmount })
+				return res.render('index', {
+					record,
+					totalAmount,
+					// icon,
+					filterCategory,
+				})
 			})
 			.catch((err) => next(err))
 	} else {
 		Category.findOne({ name: filterCategory }).then((category) => {
+			icon = category.icon
 			const categoryId = category._id
 			Record.find({ categoryId })
 				.lean()
@@ -38,7 +44,7 @@ routes.get('/', (req, res, next) => {
 						item.date = item.date.toLocaleDateString()
 					})
 
-					res.render('index', { record, totalAmount })
+					res.render('index', { record, totalAmount, icon, filterCategory })
 				})
 				.catch((err) => next(err))
 		})
