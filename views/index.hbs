@@ -1,36 +1,15 @@
 <div class='container d-flex flex-column justify-content-center'>
-	{{! search and filter }}
-
+	{{! filter }}
 	<div class='d-flex justify-content-center align-items-center mt-3'>
-		<form action='/search'>
-			<h4 class='mb-2'><label for='searchRecord'>尋找支出：</label></h4>
-			<div class='input-group'>
-				<input
-					id='searchRecord'
-					type='text'
-					name='keyword'
-					class='form-control'
-					autocomplete='off'
-					placeholder='請輸入名稱'
-					value='{{keyword}}'
-				/>
-				<div class='input-group-append'>
-					<button
-						class='btn btn-major'
-						type='submit'
-						id='search-button'
-					>搜尋</button>
-				</div>
-			</div>
-		</form>
 		<form action='/'>
-			<h4 class='mb-2'><label for='sort'>排序</label></h4>
+			<h4 class='mb-2'><label for='filterCategory'>類別</label></h4>
 			<div class='input-group'>
-				<select class='form-control' id='sort' name='sort'>
-					<option value='amount'>金額++</option>
-					<option value='-amount'>金額--</option>
-					<option value='category'>類別</option>
-					<option value='time'>時間</option>
+				<select class='form-control' id='filterCategory' name='filterCategory'>
+					<option value='family'>家居物業</option>
+					<option value='transport'>交通出行</option>
+					<option value='entertainment'>休閒娛樂</option>
+					<option value='food'>餐飲食品</option>
+					<option value='other'>其他</option>
 				</select>
 				<button type='submit' class='btn'>排序</button>
 			</div>
@@ -45,11 +24,7 @@
 			<tbody>
 				<tr class='align-items-center'>
 					<td class='col-1 align-middle text-center fs-4'>
-						{{#if icon}}
-							<i class='{{icon}}'></i>
-						{{else}}
-							<i class='fa-solid fa-pen'></i>
-						{{/if}}
+						<i class=''></i>
 					</td>
 					<td class='col-7 align-middle'>
 						<div
