@@ -6,7 +6,6 @@ const Category = require('../../models/Category')
 routes.get('/', (req, res, next) => {
 	const userId = req.user._id
 	const filterCategory = req.query.filterCategory
-	console.log(filterCategory)
 	let totalAmount = 0
 	if (!filterCategory) {
 		Record.find({ userId })
@@ -31,13 +30,17 @@ routes.get('/', (req, res, next) => {
 			const categoryId = category._id
 			Record.find({ categoryId })
 				.lean()
-				.then((item) => {
-					console.log(item)
-					totalAmount = totalAmount + item.amount
-					item.date = item.date.toLocaleDateString()
+				.then((record) => {
+					record.forEach((item) => {
+						// 加總
+						totalAmount = totalAmount + item.amount
+						// 調整date格式
+						item.date = item.date.toLocaleDateString()
+					})
+
+					res.render('index', { record, totalAmount })
 				})
 				.catch((err) => next(err))
-			// return res.render('index', { item, totalAmount })
 		})
 	}
 })
