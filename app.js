@@ -14,7 +14,6 @@ require('dotenv').config()
 require('./config/mongoose')
 
 const app = express()
-const port = 3000
 
 app.engine(
 	'hbs',
@@ -31,7 +30,7 @@ app.use(
 			mongoUrl: process.env.MONGODB_URI,
 			touchAfter: 24 * 3600,
 		}),
-		cookie: { maxAge: 60 * 1000 },
+		cookie: { maxAge: 360 * 1000 },
 	})
 )
 app.use(express.static('publics'))

@@ -15,12 +15,13 @@ Router.use('/', authenticator, home)
 
 // 404 error
 Router.get('*', (req, res) => {
-	res.status(404)
-	res.render('error', { error: req.flash('error_404_msg', '找不到頁面！') })
+  res.status(404)
+  res.render('error', { error: req.flash('error_404_msg', '找不到頁面！') })
 })
 // 500 error
 Router.get('*', (err, req, res, next) => {
-	res.status(500)
-	res.render('error', { error: req.flash('error_500_msg', '請稍後再試！') })
+  console.log(err)
+  res.status(500)
+  res.render('error', { error: req.flash('error_500_msg', '請稍後再試！') })
 })
 module.exports = Router
