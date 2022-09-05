@@ -1,3 +1,23 @@
 {
-	"cSpell.words": ["CLIENTID"]
+	"cSpell.words": ["CLIENTID"],
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#ffffff",
+		"activityBar.background": "#ffffff",
+		"activityBar.foreground": "#15202b",
+		"activityBar.inactiveForeground": "#15202b99",
+		"activityBarBadge.background": "#df9f9f",
+		"activityBarBadge.foreground": "#15202b",
+		"commandCenter.border": "#15202b99",
+		"sash.hoverBorder": "#ffffff",
+		"statusBar.background": "#ede3e4",
+		"statusBar.foreground": "#15202b",
+		"statusBarItem.hoverBackground": "#d9c4c6",
+		"statusBarItem.remoteBackground": "#ede3e4",
+		"statusBarItem.remoteForeground": "#15202b",
+		"titleBar.activeBackground": "#ede3e4",
+		"titleBar.activeForeground": "#15202b",
+		"titleBar.inactiveBackground": "#ede3e499",
+		"titleBar.inactiveForeground": "#15202b99"
+	},
+	"peacock.color": "#ede3e4"
 }

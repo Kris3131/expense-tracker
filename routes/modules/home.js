@@ -26,23 +26,29 @@ routes.get('/', (req, res, next) => {
 			})
 			.catch((err) => next(err))
 	} else {
-		Category.findOne({ name: filterCategory }).then((category) => {
-			icon = category.icon
-			const categoryId = category._id
-			Record.find({ $and: [{ categoryId }, { userId }] })
-				.lean()
-				.then((record) => {
-					record.forEach((item) => {
-						// 加總
-						totalAmount = totalAmount + item.amount
-						// 調整date格式
-						item.date = item.date.toLocaleDateString()
+		Category.findOne({ name: filterCategory })
+			.then((category) => {
+				icon = category.icon
+				const categoryId = category._id
+				Record.find({ $and: [{ categoryId }, { userId }] })
+					.lean()
+					.then((record) => {
+						record.forEach((item) => {
+							// 加總
+							totalAmount = totalAmount + item.amount
+							// 調整date格式
+							item.date = item.date.toLocaleDateString()
+						})
+						return res.render('index', {
+							record,
+							totalAmount,
+							icon,
+							filterCategory,
+						})
 					})
-
-					res.render('index', { record, totalAmount, icon, filterCategory })
-				})
-				.catch((err) => next(err))
-		})
+					.catch((err) => next(err))
+			})
+			.catch((err) => next(err))
 	}
 })
 

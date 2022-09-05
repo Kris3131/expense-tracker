@@ -15,7 +15,7 @@ routes.post('', (req, res, next) => {
 		.then((category) => {
 			// 沒有的->建立一個新的 Category Model 項目
 			if (!category) {
-				Category.create({ name: req.body.category, icon }) //在 Category 建立新的項目
+				Category.create({ name: req.body.category }) //在 Category 建立新的項目
 					.then((category) => {
 						Record.create({
 							name,
@@ -25,9 +25,8 @@ routes.post('', (req, res, next) => {
 							categoryId: category._id,
 							userId,
 						}) // 建立新的 Record Model 項目
-							.then(() => res.redirect('/'))
-							.catch((err) => next(err))
 					})
+					.then(() => res.redirect('/'))
 					.catch((err) => next(err))
 			}
 			if (category) {
@@ -38,7 +37,6 @@ routes.post('', (req, res, next) => {
 					.catch((err) => next(err))
 			}
 		})
-
 		.catch((err) => next(err))
 })
 
@@ -60,21 +58,21 @@ routes.put('/:id', (req, res) => {
 		.lean()
 		.then((category) => {
 			if (!category) {
-				Category.create({ name: req.body.category }).then((category) => {
-					const categoryId = category._id
-					Record.findByIdAndUpdate(_id, {
-						name,
-						date,
-						categoryId,
-						amount,
-						userId,
-					})
-						.lean()
-						.then(() => {
-							res.redirect('/')
+				Category.create({ name: req.body.category })
+					.then((category) => {
+						const categoryId = category._id
+						Record.findByIdAndUpdate(_id, {
+							name,
+							date,
+							categoryId,
+							amount,
+							userId,
 						})
-						.catch((err) => next(err))
-				})
+					})
+					.then(() => {
+						res.redirect('/')
+					})
+					.catch((err) => next(err))
 			}
 			if (category) {
 				const categoryId = category._id
@@ -85,7 +83,6 @@ routes.put('/:id', (req, res) => {
 					amount,
 					userId,
 				})
-					.lean()
 					.then(() => {
 						res.redirect('/')
 					})
@@ -99,9 +96,7 @@ routes.delete('/:id', (req, res, next) => {
 	const userId = req.user._id
 	const _id = req.params.id
 	Record.findOneAndRemove({ _id, userId })
-
 		.then(() => {
-			req.flash('success_msg', '你已經成功登出。')
 			res.redirect('/')
 		})
 		.catch((err) => next(err))
