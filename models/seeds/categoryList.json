@@ -1,22 +1,22 @@
 [
  {
   "name": "家居物業",
-  "icon": "fa-solid fa-house"
+  "icon": "fa-sharp fa-solid fa-house"
  },
  {
   "name": "交通出行",
-  "icon": "fa-solid fa-van-shuttle"
+  "icon": "fa-sharp fa-solid fa-bus"
  },
  {
   "name": "休閒娛樂",
-  "icon": "fa-solid fa-face-grin-beam"
+  "icon": "fa-sharp fa-solid fa-camera-movie"
  },
  {
   "name": "餐飲食品",
-  "icon": "fa-solid fa-utensils"
+  "icon": "fa-solid fa-pot-food"
  },
  {
   "name": "其他",
-  "icon": "fa-solid fa-pen"
+  "icon": "fa-sharp fa-solid fa-pen"
  }
 ]

@@ -20,11 +20,11 @@
 	<div class='d-flex justify-content-center'><h2>總支出:
 			{{totalAmount}}元</h2></div>
 	<table class='table'>
-		{{#each record}}
 			<tbody>
+		{{#each record}}
 				<tr class='align-items-center'>
 					<td class='col-1 align-middle text-center fs-4'>
-						<i class='{{this.categoryId.icon}}'></i>
+						<i class='icon {{this.categoryId.icon}}'></i>
 					</td>
 					<td class='col-7 align-middle'>
 						<div
@@ -52,8 +52,8 @@
 						</form>
 					</td>
 				</tr>
-			</tbody>
 		{{/each}}
+			</tbody>
 	</table>
 
 	<a href='/records/new' class='mx-auto btn border-dark'>新增支出</a>
