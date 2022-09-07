@@ -7,7 +7,6 @@ routes.get('/', (req, res, next) => {
 	const userId = req.user._id
 	const filterCategory = req.query.filterCategory
 	let totalAmount = 0
-	let icon = ''
 	if (!filterCategory) {
 		Record.find({ userId })
 			.populate('categoryId')
